@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 function getEmployees() {
-		const url = `http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true`;
+		const url = `http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true&delay=3`;
 		return new Promise((resolve, reject) => {
 			axios(url)
 				.then((response) => {

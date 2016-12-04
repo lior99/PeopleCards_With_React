@@ -11,23 +11,38 @@ class App extends React.Component {
     super();
 
     this.state = {employees : []};
-    getEmployees()
-    	.then(response => {
-    		this.setState({employees: response});
-    	})
-    	.catch(err => {
-    		console.log('error getting employees data!', err);
-    	})
+  }
 
 
+  componentWillMount(){
+          getEmployees()
+              .then(response => {
+                  this.setState({employees: response});
+              })
+              .catch(err => {
+                  console.log('error getting employees data!', err);
+              })
   }
   
   render() {
   	const id = Date.now();
 
-    return (
-      <Cards key={id} employees={this.state.employees}/>
-    );
+    let employees = this.state.employees;
+    // let employees = [];
+
+    if (employees.length == 0){
+      return (
+            <div className="loading">
+              Loading...
+            </div>
+          
+      )
+    }
+    else {
+          return (
+            <Cards employees={this.state.employees}></Cards>
+          )      
+    }
   } 
 }
 

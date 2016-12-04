@@ -14,16 +14,15 @@ class Cards extends React.Component {
 		let employeesArray = typeof this.props.employees !== 'undefined' ? [...this.props.employees] : [];
 		
 		this.employeesCards = employeesArray.map((employee) => {
-			return 	<div className="employee" key={employee.id}>
-								<EmployeeCard employee={employee}></EmployeeCard>
-
-					</div>
+			return 	(
+				<div className="employee" key={employee.name}>
+					<EmployeeCard employee={employee}></EmployeeCard>
+				</div>
+			)
 		});
 
-		let id = Date.now();
-
 		return (
-			<div className="cards-container" key="{id}">
+			<div className="cards-container">
  				{ this.employeesCards  }
 			</div>
 		);
