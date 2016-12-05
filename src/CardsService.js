@@ -25,5 +25,26 @@ function createEmployeeObject(rawPersonObject) {
 		}
 }
 
+function filterEmployees(arr, filter, possibleKeys) {
+	if (filter === '') {
+		return arr;
+	}
+	else {
+		let lowerCaseFilter = filter.toLowerCase();
+		let filteredArray = arr.filter((item) => {
+			let storedItem = null;
+			for(let key of possibleKeys) {
+				if (item[key].toLowerCase().includes(lowerCaseFilter)) {
+					storedItem = item;
+					break;
+				}
+			}
+			return storedItem;
+		})
 
-export { getEmployees };
+		return filteredArray;
+	}
+}
+
+
+export { getEmployees, filterEmployees};

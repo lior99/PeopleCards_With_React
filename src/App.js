@@ -2,48 +2,59 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import { getEmployees } from './CardsService';
+import { getEmployees, filterEmployees } from './CardsService';
 import Cards from './Cards';
 
 
 class App extends React.Component {
-  constructor() {
-    super();
+    constructor() {
+      super();
 
-    this.state = {employees : []};
-  }
+      this.state = {employees : [], dataWasLoaded : false, hasFilter:false};
+      this.filteredEmployees = [];
+    }
 
 
-  componentWillMount(){
-          getEmployees()
-              .then(response => {
-                  this.setState({employees: response});
-              })
-              .catch(err => {
-                  console.log('error getting employees data!', err);
-              })
-  }
+    componentDidMount(){
+            getEmployees()
+                  .then(response => {
+                      this.setState({employees: response, dataWasLoaded:true});
+                  })
+                  .catch(err => {
+                      console.log('error getting employees data!', err);
+                  })
+    }
+
+    filterText(value) {
+       if (value.length === 0){
+          this.setState({hasFilter : false });
+       }
+       else {
+          this.filteredEmployees = filterEmployees([...this.state.employees], value, ['name', 'email', 'firstName', 'lastName','company']);
+          this.setState({hasFilter : true });  
+      }
+      
+    }
   
-  render() {
-  	const id = Date.now();
+    render() {
+    	const id = Date.now();
 
-    let employees = this.state.employees;
-    // let employees = [];
+      let employees = this.state.hasFilter ? this.filteredEmployees : this.state.employees;
 
-    if (employees.length == 0){
-      return (
-            <div className="loading">
-              Loading...
-            </div>
-          
-      )
-    }
-    else {
-          return (
-            <Cards employees={this.state.employees}></Cards>
-          )      
-    }
-  } 
+      if (!this.state.dataWasLoaded){
+        return (
+              <div className="loading">
+                Loading...
+              </div>
+            
+        )
+      }
+      else {
+            return (
+              <Cards employees={employees} filterFunc={this.filterText.bind(this)}></Cards>
+            )      
+      }
+    } 
 }
 
 

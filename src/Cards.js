@@ -7,9 +7,16 @@ class Cards extends React.Component {
 		super();
 		
 		this.employeesCards = [];
+		this.filterData = this.filterData.bind(this);
 	}
 
 	
+	filterData(e) {
+		let val = e.target.value;
+		this.props.filterFunc(val);
+	}
+
+
 	render() {
 		let employeesArray = typeof this.props.employees !== 'undefined' ? [...this.props.employees] : [];
 		
@@ -22,8 +29,13 @@ class Cards extends React.Component {
 		});
 
 		return (
-			<div className="cards-container">
- 				{ this.employeesCards  }
+			<div>
+				<div className="filter-container">
+					<input type="text" placeholder="filter..." className="filter" onChange={this.filterData}/>
+				</div>
+				<div className="cards-container">
+ 					{ this.employeesCards  }
+				</div>
 			</div>
 		);
 	}
