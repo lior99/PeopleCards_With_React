@@ -158,3 +158,10 @@ input[type=text] {
   text-align: center;
 
 }
+
+
+.no-data-found {
+  padding: 10px;
+  width: 200px;
+  color: #e60c4b;
+}

@@ -28,6 +28,10 @@ class Cards extends React.Component {
 			)
 		});
 
+		if (this.employeesCards.length === 0){
+			this.employeesCards = <div className="no-data-found">No data found!</div>;
+		}
+
 		return (
 			<div>
 				<div className="filter-container">
