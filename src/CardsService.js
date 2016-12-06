@@ -1,20 +1,22 @@
 import axios from 'axios';
 
-function getEmployees() {
+const CardsService = {
+	getEmployees:function() {
 		const url = `http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true&delay=3`;
 		return new Promise((resolve, reject) => {
 			axios(url)
 				.then((response) => {
-					let convertedResponse = response.data.map(createEmployeeObject);
+					let convertedResponse = response.data.map(this.createEmployeeObject);
 					resolve(convertedResponse);
 				})
 				.catch((err) => {
 					reject(err);
 				});
 		});
-}
+	},
 
-function createEmployeeObject(rawPersonObject) {
+
+	createEmployeeObject: function (rawPersonObject) {
 		return {
 			name : `${ rawPersonObject.firstName } ${ rawPersonObject.lastName }`,
 			id : rawPersonObject.id,
@@ -23,28 +25,29 @@ function createEmployeeObject(rawPersonObject) {
 			company : rawPersonObject.company,
 			email : rawPersonObject.email
 		}
-}
+	},
 
-function filterEmployees(arr, filter, possibleKeys) {
-	if (filter === '') {
-		return arr;
-	}
-	else {
-		let lowerCaseFilter = filter.toLowerCase();
-		let filteredArray = arr.filter((item) => {
-			let storedItem = null;
-			for(let key of possibleKeys) {
-				if (item[key].toLowerCase().includes(lowerCaseFilter)) {
-					storedItem = item;
-					break;
+	filterEmployees:function (arr, filter, possibleKeys) {
+		if (filter === '') {
+			return arr;
+		}
+		else {
+			let lowerCaseFilter = filter.toLowerCase();
+			let filteredArray = arr.filter((item) => {
+				let storedItem = null;
+				for(let key of possibleKeys) {
+					if (item[key].toLowerCase().includes(lowerCaseFilter)) {
+						storedItem = item;
+						break;
+					}
 				}
-			}
-			return storedItem;
-		})
+				return storedItem;
+			})
 
-		return filteredArray;
+			return filteredArray;
+		}
 	}
+
 }
 
-
-export { getEmployees, filterEmployees};
+export default CardsService;

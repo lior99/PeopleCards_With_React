@@ -8,9 +8,8 @@ class EmployeeCard extends React.Component {
 					<div>
 						<div className="employee-name">{ employee.name }</div>
 						<div className="company">{ employee.company }</div>
-						<div className="email">{ employee.email }</div>
+						<div className="email">{ employee.email }</div>		
 					</div>
-
 		);
 	}
 }
