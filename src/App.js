@@ -1,11 +1,7 @@
-// import "babel-polyfill";
 import React from 'react';
-import ReactDom from 'react-dom';
 
-// import { getEmployees, filterEmployees } from './CardsService';
-import CardsService from './CardsService';
-import Cards from './Cards';
-
+import CardsService from './services/CardsService';
+import Cards from './components/Cards';
 
 class App extends React.Component {
     constructor() {
@@ -42,8 +38,6 @@ class App extends React.Component {
     }
   
     render() {
-    	const id = Date.now();
-
       let employees = this.state.hasFilter ? this.filteredEmployees : this.state.employees;
 
       if (!this.state.dataWasLoaded){
