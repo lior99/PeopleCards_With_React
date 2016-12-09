@@ -1,5 +1,4 @@
-const CardsService = (function(){
-	function getEmployees() {
+export function	getEmployees() {
 		// with 3 seconds delay
 		// const url = `http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true&delay=3`;
 
@@ -19,21 +18,21 @@ const CardsService = (function(){
 					reject(err);
 				});
 		});
+}
+
+
+ function _createEmployeeObject(rawPersonObject) {
+	return {
+		name : `${ rawPersonObject.firstName } ${ rawPersonObject.lastName }`,
+		id : rawPersonObject.id,
+		firstName : rawPersonObject.firstName,
+		lastName : rawPersonObject.lastName,
+		company : rawPersonObject.company,
+		email : rawPersonObject.email
 	}
+}
 
-
-	function _createEmployeeObject(rawPersonObject) {
-		return {
-			name : `${ rawPersonObject.firstName } ${ rawPersonObject.lastName }`,
-			id : rawPersonObject.id,
-			firstName : rawPersonObject.firstName,
-			lastName : rawPersonObject.lastName,
-			company : rawPersonObject.company,
-			email : rawPersonObject.email
-		}
-	}
-
-	function filterEmployees(arr, filter, possibleKeys) {
+export function filterEmployees(arr, filter, possibleKeys) {
 		if (filter === '') {
 			return arr;
 		}
@@ -52,15 +51,8 @@ const CardsService = (function(){
 
 			return filteredArray;
 		}
-	}
+}
 
-	return {
-		getEmployees : getEmployees,
-		filterEmployees : filterEmployees
-	}
-})();
-
-export default CardsService;
 
 
 

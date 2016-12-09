@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CardsService from './services/CardsService';
+import { getEmployees, filterEmployees } from './services/CardsService';
 import Cards from './components/Cards';
 
 class App extends React.Component {
@@ -13,8 +13,7 @@ class App extends React.Component {
 
 
     componentDidMount(){
-            CardsService
-                  .getEmployees()
+            getEmployees()
                   .then(response => {
                       this.setState({employees: response, dataWasLoaded:true});
                   })
@@ -28,8 +27,7 @@ class App extends React.Component {
           this.setState({hasFilter : false });
        }
        else {
-          this.filteredEmployees = CardsService
-                                      .filterEmployees([...this.state.employees],
+          this.filteredEmployees = filterEmployees([...this.state.employees],
                                                          value,
                                                          ['name', 'email', 'firstName', 'lastName','company']);
           this.setState({hasFilter : true });  
