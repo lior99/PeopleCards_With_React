@@ -52,7 +52,3 @@ export function filterEmployees(arr, filter, possibleKeys) {
 			return filteredArray;
 		}
 }
-
-
-
-
