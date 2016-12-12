@@ -27,9 +27,9 @@ class App extends React.Component {
           this.setState({hasFilter : false });
        }
        else {
-          this.filteredEmployees = filterEmployees([...this.state.employees],
-                                                         value,
-                                                         ['name', 'email', 'firstName', 'lastName','company']);
+          const employeesArray = Array.from(this.state.employees);
+          const filterByArray =  ['name', 'email', 'firstName', 'lastName','company'];
+          this.filteredEmployees = filterEmployees(employeesArray, value, filterByArray);
           this.setState({hasFilter : true });  
       }
       
