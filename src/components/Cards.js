@@ -44,7 +44,10 @@ class Cards extends React.Component {
 	}
 }
 
-
+Cards.propTypes = {
+	filterFunc : React.PropTypes.func.isRequired,
+	employees : React.PropTypes.array
+}
 
 
 export default Cards;

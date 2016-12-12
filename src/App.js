@@ -19,7 +19,7 @@ class App extends React.Component {
                   })
                   .catch(err => {
                       console.log('error getting employees data!', err);
-                  })
+                  });
     }
 
     filterText(value) {
@@ -53,7 +53,6 @@ class App extends React.Component {
       }
     } 
 }
-
 
 
 export default App;

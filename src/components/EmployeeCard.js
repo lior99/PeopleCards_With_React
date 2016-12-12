@@ -14,4 +14,9 @@ class EmployeeCard extends React.Component {
 	}
 }
 
+EmployeeCard.propTypes = {
+	employee : React.PropTypes.object.isRequired
+}
+
+
 export default EmployeeCard;
