@@ -1,27 +1,19 @@
-export function	getEmployees() {
-		// with 3 seconds delay
-		// const url = `http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true&delay=3`;
+import co from 'co';
 
-		// without delay		
-		const url = `http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true`;
-		return new Promise((resolve, reject) => {
-			fetch(url) // => using fetch api
-				.then((response) => {
-					response
-						.json()
-						.then(data => {
-								let convertedResponse = data.map(_createEmployeeObject);
-								resolve(convertedResponse);			
-						 });
-				})
-				.catch((err) => {
-					reject(err);
-				});
-		});
+export function	getEmployees() {
+	const fn =  co.wrap(function* (){
+		const url = 'http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true';
+		const blobData = yield fetch(url);
+		const employeeData = yield blobData.json();
+		const response = employeeData.map(_createEmployeeObject);
+		return yield Promise.resolve(response);
+	});
+
+	return fn();
 }
 
 
- function _createEmployeeObject(rawPersonObject) {
+function _createEmployeeObject(rawPersonObject){
 	return {
 		name : `${ rawPersonObject.firstName } ${ rawPersonObject.lastName }`,
 		id : rawPersonObject.id,
