@@ -8,7 +8,7 @@ class App extends React.Component {
 		super();
 		this.state = {employees : [], dataWasLoaded : false, hasFilter:false};
 		this.filteredEmployees = [];
-  	}
+	  }
 
 
 	componentDidMount(){
