@@ -24,7 +24,7 @@ class Cards extends React.Component {
 				<div className="employee" key={employee.name}>
 					<EmployeeCard employee={employee}></EmployeeCard>
 				</div>
-			)
+			);
 		});
 
 		if (this.employeesCards.length === 0){
@@ -37,7 +37,7 @@ class Cards extends React.Component {
 					<input type="text" placeholder="filter..." className="filter" onChange={this.filterData}/>
 				</div>
 				<div className="cards-container">
- 					{ this.employeesCards  }
+					{ this.employeesCards  }
 				</div>
 			</div>
 		);
@@ -47,7 +47,7 @@ class Cards extends React.Component {
 Cards.propTypes = {
 	filterFunc : React.PropTypes.func.isRequired,
 	employees : React.PropTypes.array
-}
+};
 
 
 export default Cards;
