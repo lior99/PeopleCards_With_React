@@ -9,3 +9,5 @@
 #### Config
 config Files are in the config folder, created after   
  running the npm run eject (provided by react-scripts)
+
+* now using the co library for 'async/await' style :)
