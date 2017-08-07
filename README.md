@@ -1,7 +1,11 @@
-<h1>README</h1>
+# README
 
-<h3>install and run</h3>
-<ul>
-  <li>Run npm install</li>
-  <li>npm start - to launch the app</li>
-</ul>
+### Setup
+
+  * Run npm install
+  * npm start - to launch the app
+
+---
+#### Config
+config Files are in the config folder, created after   
+ running the npm run eject (provided by react-scripts)
