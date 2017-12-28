@@ -1,19 +1,17 @@
-import co from 'co';
+const getEmployees = async() => {
+	const url = 'http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true';
+	const blobData = await fetch(url);
+	const employeeData = await blobData.json();
+	return employeeData.map(_createEmployeeObject);
 
-export function	getEmployees() {
-	const fn =  co.wrap(function* (){
-		const url = 'http://www.filltext.com/?rows=200&id={index}&firstName={firstName}&lastName={lastName}&company={business}&email={email}&pretty=true';
-		const blobData = yield fetch(url);
-		const employeeData = yield blobData.json();
-		const response = employeeData.map(_createEmployeeObject);
-		return yield Promise.resolve(response);
-	});
-
-	return fn();
+	// return new Promise((resolve, reject) => {
+	// 	setTimeout(() => {
+	// 		reject('simulating an erorr!')
+	// 	}, 2000);
+	// });
 }
 
-
-function _createEmployeeObject(rawPersonObject){
+const _createEmployeeObject = (rawPersonObject) => {
 	return {
 		name : `${ rawPersonObject.firstName } ${ rawPersonObject.lastName }`,
 		id : rawPersonObject.id,
@@ -24,23 +22,27 @@ function _createEmployeeObject(rawPersonObject){
 	}
 }
 
-export function filterEmployees(arr, filter, possibleKeys) {
+const filterEmployees = (arr, filter, possibleKeys) => {
 		if (filter === '') {
 			return arr;
 		}
-		else {
-			let lowerCaseFilter = filter.toLowerCase();
-			let filteredArray = arr.filter((item) => {
-				let storedItem = null;
-				for(let key of possibleKeys) {
-					if (item[key].toLowerCase().includes(lowerCaseFilter)) {
-						storedItem = item;
-						break;
-					}
+	
+		let lowerCaseFilter = filter.toLowerCase();
+		let filteredArray = arr.filter((item) => {
+			let storedItem = null;
+			for(let key of possibleKeys) {
+				if (item[key].toLowerCase().includes(lowerCaseFilter)) {
+					storedItem = item;
+					break;
 				}
-				return storedItem;
-			})
+			}
+			return storedItem;
+		})
 
-			return filteredArray;
-		}
+		return filteredArray;
+}
+
+export {
+	getEmployees,
+	filterEmployees
 }

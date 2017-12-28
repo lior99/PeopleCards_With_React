@@ -1,11 +1,11 @@
 import React from 'react';
 import EmployeeCard from './EmployeeCard';
+import PropTypes from 'prop-types';
 
 class Cards extends React.Component {
 	constructor() {
 		super();
 		
-		this.employeesCards = [];
 		this.filterData = this.filterData.bind(this);
 	}
 
@@ -15,11 +15,10 @@ class Cards extends React.Component {
 		this.props.filterFunc(val);
 	}
 
-
 	render() {
-		let employeesArray = typeof this.props.employees !== 'undefined' ? [...this.props.employees] : [];
-		
-		this.employeesCards = employeesArray.map((employee) => {
+		// let employeesArray = typeof this.props.employees !== 'undefined' ? [...this.props.employees] : [];
+		let employeesArray = this.props.employees || [];
+		let employeesCards = employeesArray.map(employee => {
 			return 	(
 				<div className="employee" key={employee.name}>
 					<EmployeeCard employee={employee}></EmployeeCard>
@@ -27,8 +26,8 @@ class Cards extends React.Component {
 			);
 		});
 
-		if (this.employeesCards.length === 0){
-			this.employeesCards = <div className="no-data-found">No data found!</div>;
+		if (employeesCards.length === 0){
+			employeesCards = <div className="no-data-found">No data found!</div>;
 		}
 
 		return (
@@ -37,7 +36,7 @@ class Cards extends React.Component {
 					<input type="text" placeholder="filter..." className="filter" onChange={this.filterData}/>
 				</div>
 				<div className="cards-container">
-					{ this.employeesCards  }
+					{ employeesCards  }
 				</div>
 			</div>
 		);
@@ -45,9 +44,8 @@ class Cards extends React.Component {
 }
 
 Cards.propTypes = {
-	filterFunc : React.PropTypes.func.isRequired,
-	employees : React.PropTypes.array
+	filterFunc : PropTypes.func.isRequired,
+	employees : PropTypes.array
 };
-
 
 export default Cards;

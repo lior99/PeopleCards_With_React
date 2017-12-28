@@ -1,29 +1,38 @@
 import React from 'react';
 import { getEmployees, filterEmployees } from './services/CardsService';
 import Cards from './components/Cards';
-import co from 'co';
 
 class App extends React.Component {
-	constructor() {
-		super();
-		this.state = {employees : [], dataWasLoaded : false, hasFilter:false};
-		this.filteredEmployees = [];
-	  }
+    constructor() {
+        super();
+				this.filterText = this.filterText.bind(this);
+
+        this.state = {
+					employees: [],
+					dataWasLoaded: false,
+					hasFilter:false,
+					filteredEmployees: []
+				};
+    }
 
 
-	componentDidMount(){
-			// getEmployees()
-			//       .then(response => {
-			//           this.setState({employees: response, dataWasLoaded:true});
-			//       })
-			//       .catch(err => {
-			//           console.log('error getting employees data!', err);
-			//       })
-
-			co(function* (){
-				const response = yield getEmployees();
-				this.setState({employees: response, dataWasLoaded:true});
-			}.bind(this));
+	async componentDidMount(){
+        try {
+            const response = await getEmployees();
+            this.setState({
+                    employees: response,
+                    dataWasLoaded:true,
+                    hasErrors: false
+            });
+            
+        } catch(err) { 
+            console.log('error getting employees data!', err);
+            this.setState({
+                hasErrors: true,
+                dataWasLoaded: true
+            })
+        }
+            
 	}
 
 	filterText(value) {
@@ -33,28 +42,40 @@ class App extends React.Component {
 	   else {
 		  const employeesArray = Array.from(this.state.employees);
 		  const filterByArray =  ['name', 'email', 'firstName', 'lastName','company'];
-		  this.filteredEmployees = filterEmployees(employeesArray, value, filterByArray);
-		  this.setState({hasFilter : true });
+		  const filteredEmployees = filterEmployees(employeesArray, value, filterByArray);
+		  this.setState({
+				hasFilter: true,
+				filteredEmployees
+			});
 	  }
 
 	}
 
 	render() {
-	  let employees = this.state.hasFilter ? this.filteredEmployees : this.state.employees;
+	  let employees = this.state.hasFilter ? this.state.filteredEmployees : this.state.employees;
+		const { dataWasLoaded, hasErrors } = this.state;
 
-	  if (!this.state.dataWasLoaded){
+        if (hasErrors) {
+            return (
+                <div style={{ fontSize: '20px', color: '#ff0000' }}>OOPS...Something went wrong</div>
+            )
+        }
+
+
+        if (!dataWasLoaded) {
+            return (
+                    <div className="loading">
+                        Loading...
+                    </div>
+                )
+		}
+		
 		return (
-			  <div className="loading">
-				Loading...
-			  </div>
-
+			<Cards
+                employees={employees}
+                filterFunc={this.filterText}
+            />
 		)
-	  }
-	  else {
-			return (
-			  <Cards employees={employees} filterFunc={this.filterText.bind(this)}></Cards>
-			)
-	  }
 	}
 }
 
